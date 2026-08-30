@@ -13,7 +13,7 @@ jobs:
         run: |
           sudo apt-get update
           dkp-pacman -Syu --noconfirm
-          dkp-pacman -S general-tools libctru citro3d --noconfirm
+          dkp-pacman -S general-tools libctru citro3d 3ds-bannertool --noconfirm
 
       - name: Fix deprecated code
         run: |
