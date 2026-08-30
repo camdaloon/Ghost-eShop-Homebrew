@@ -12,7 +12,7 @@ jobs:
       - name: Install Standalone Bannertool
         run: |
           sudo apt-get update
-          sudo apt-get install -x- wget --noconfirm || true
+          sudo apt-get install -y wget unzip --noconfirm
           wget https://github.com
           unzip bannertool.zip -d bannertool_dir
           sudo cp bannertool_dir/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool
