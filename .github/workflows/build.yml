@@ -9,11 +9,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install 3DS tools
+      - name: Install Standalone Bannertool
         run: |
           sudo apt-get update
-          dkp-pacman -Syu --noconfirm
-          dkp-pacman -S general-tools libctru citro3d bannertool --noconfirm
+          sudo apt-get install -x- wget --noconfirm || true
+          wget https://github.com
+          unzip bannertool.zip -d bannertool_dir
+          sudo cp bannertool_dir/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool
+          sudo chmod +x /opt/devkitpro/tools/bin/bannertool
 
       - name: Fix deprecated code
         run: |
