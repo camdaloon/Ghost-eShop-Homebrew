@@ -9,14 +9,16 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Compile Bannertool Natively
+      - name: Build Packaging Tool Natively
         run: |
           sudo apt-get update
-          sudo apt-get install -y git build-essential
-          git clone --recursive "https://github.com" bannertool_src
-          cd bannertool_src
-          make
-          sudo cp output/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool || sudo cp output/bannertool /opt/devkitpro/tools/bin/bannertool || true
+          sudo apt-get install -y build-essential curl
+          mkdir -p tool_src/source
+          curl -L -o tool_src/Makefile "https://githubusercontent.com"
+          curl -L -o tool_src/source/main.cpp "https://githubusercontent.com"
+          cd tool_src
+          make || g++ source/main.cpp -o bannertool || true
+          sudo cp bannertool /opt/devkitpro/tools/bin/bannertool || sudo cp output/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool || true
           sudo chmod +x /opt/devkitpro/tools/bin/bannertool
 
       - name: Fix deprecated code
