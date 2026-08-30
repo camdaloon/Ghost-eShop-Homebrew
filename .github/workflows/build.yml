@@ -13,7 +13,7 @@ jobs:
         run: |
           sudo apt-get update
           dkp-pacman -Syu --noconfirm
-          dkp-pacman -S 3ds-tools 3ds-libctru 3ds-citro3d --noconfirm
+          dkp-pacman -S general-tools libctru citro3d --noconfirm
 
       - name: Run Build
         run: |
