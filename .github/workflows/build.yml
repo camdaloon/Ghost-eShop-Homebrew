@@ -15,6 +15,11 @@ jobs:
           dkp-pacman -Syu --noconfirm
           dkp-pacman -S general-tools libctru citro3d --noconfirm
 
+      - name: Fix deprecated code
+        run: |
+          git config --global --add safe.directory /__w/Ghost-eShop-Homebrew/Ghost-eShop-Homebrew
+          sed -i 's/AM_DeleteAppTitle/AM_DeleteTitle/g' source/utils/cia.cpp
+
       - name: Run Build
         run: |
           make clean || true
