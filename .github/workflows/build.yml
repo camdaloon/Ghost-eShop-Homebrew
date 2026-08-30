@@ -13,8 +13,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y git build-essential
-          git clone --recursive "https://github.com"
-          cd bannertool
+          git clone --recursive "https://github.com" bannertool_src
+          cd bannertool_src
           make
           sudo cp output/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool || sudo cp output/bannertool /opt/devkitpro/tools/bin/bannertool || true
           sudo chmod +x /opt/devkitpro/tools/bin/bannertool
