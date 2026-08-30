@@ -9,11 +9,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Standalone Bannertool
+      - name: Compile Bannertool Natively
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl
-          curl -L -o /opt/devkitpro/tools/bin/bannertool "https://gitlab.com" || curl -L -o /opt/devkitpro/tools/bin/bannertool "https://github.com"
+          sudo apt-get install -y git build-essential
+          git clone --recursive https://github.com
+          cd bannertool
+          make
+          sudo cp output/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool || sudo cp output/bannertool /opt/devkitpro/tools/bin/bannertool || true
           sudo chmod +x /opt/devkitpro/tools/bin/bannertool
 
       - name: Fix deprecated code
