@@ -13,10 +13,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y curl
-          curl -L -o bannertool.tar.gz "https://github.com"
-          mkdir -p bannertool_dir
-          tar -xzf bannertool.tar.gz -C bannertool_dir || unzip bannertool.tar.gz -d bannertool_dir || true
-          sudo cp bannertool_dir/linux-x64/bannertool /opt/devkitpro/tools/bin/bannertool || sudo cp bannertool_dir/bannertool /opt/devkitpro/tools/bin/bannertool || true
+          curl -L -o /opt/devkitpro/tools/bin/bannertool "https://github.com"
           sudo chmod +x /opt/devkitpro/tools/bin/bannertool
 
       - name: Fix deprecated code
