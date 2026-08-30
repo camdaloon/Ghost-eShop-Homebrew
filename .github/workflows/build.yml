@@ -17,14 +17,15 @@ jobs:
 
       - name: Run Build
         run: |
-          make clean
+          make clean || true
           make
 
       - name: Upload CIA Artifact
-        uses: actions/artifacts@v4
+        uses: actions/upload-artifact@v4
         with:
           name: compiled-3ds-cia
           path: |
             *.cia
             build/*.cia
             bin/*.cia
+          if-no-files-found: warn
