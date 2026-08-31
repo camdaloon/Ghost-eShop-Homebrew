@@ -9,20 +9,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Build Packaging Tools Natively
+      - name: Install Official Packaging Tools Natively
         run: |
           sudo apt-get update
-          sudo apt-get install -y git build-essential libssl-dev
+          sudo apt-get install -y curl unzip
           
-          # Compile Real Makerom
-          git clone --recursive "https://github.com" projectctr_src
-          cd projectctr_src/makerom
-          make
-          sudo cp makerom /opt/devkitpro/tools/bin/makerom
+          # Fetch official pre-compiled makerom utility
+          curl -L -o makerom.zip "https://github.com"
+          unzip makerom.zip -d makerom_dir
+          sudo cp makerom_dir/makerom /opt/devkitpro/tools/bin/makerom
           sudo chmod +x /opt/devkitpro/tools/bin/makerom
-          cd ../..
 
-          # Build Mock Bannertool
+          # Construct mock bannertool to clear asset dependencies
           mkdir -p mock_tools
           cat << 'EOF' > mock_tools/banner.cpp
           #include <iostream>
