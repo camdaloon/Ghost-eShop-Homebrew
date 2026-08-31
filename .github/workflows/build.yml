@@ -12,10 +12,11 @@ jobs:
       - name: Install Official Packaging Tools Natively
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl
+          sudo apt-get install -y curl unzip
           
-          # Place the actual makerom executable straight into the tool path
-          curl -L -o /opt/devkitpro/tools/bin/makerom "https://github.com"
+          # Fetch official pre-compiled makerom utility from the accurate source path
+          curl -L -o makerom.zip "https://github.com"
+          unzip -o makerom.zip -d /opt/devkitpro/tools/bin/
           sudo chmod +x /opt/devkitpro/tools/bin/makerom
 
           # Construct mock bannertool to clear asset dependencies
