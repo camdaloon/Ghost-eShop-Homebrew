@@ -5,9 +5,9 @@ An Alternative eShop for the Nintendo 3DS family of systems.
 
 # Download
 ### Requirements
-- Latest version available [here](https://ghosteshop.com/)
+- Latest version available:
 
-- A Modded Nintendo 3DS(XL)/2DS(XL)
+- A Modded Nintendo 3DS(XL)/2DS/NEW3DS(XL)/NEW2DS(XL)
 
 - An SD Card with at least 500 MB to install games
 
