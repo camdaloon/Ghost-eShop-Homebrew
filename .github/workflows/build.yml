@@ -12,14 +12,15 @@ jobs:
       - name: Install Official Packaging Tools Natively
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl
+          sudo apt-get install -y curl build-essential libssl-dev git
           
-          # Download the real Linux archive of makerom and unpack it natively
-          curl -L -o makerom.tar.gz "https://github.com"
-          mkdir -p makerom_dir
-          tar -xzf makerom.tar.gz -C makerom_dir
-          sudo cp makerom_dir/makerom /opt/devkitpro/tools/bin/makerom
+          # Clone and compile a working makerom binary natively
+          git clone --recursive "https://github.com" ctr_src
+          cd ctr_src/makerom
+          make
+          sudo cp makerom /opt/devkitpro/tools/bin/makerom
           sudo chmod +x /opt/devkitpro/tools/bin/makerom
+          cd ../..
 
           # Construct mock bannertool to clear asset dependencies
           mkdir -p mock_tools
