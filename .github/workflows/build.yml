@@ -11,9 +11,19 @@ jobs:
 
       - name: Build Packaging Tools Natively
         run: |
-          mkdir -p mock_tools
+          sudo apt-get update
+          sudo apt-get install -y git build-essential libssl-dev
           
-          # Create mock bannertool
+          # Compile Real Makerom
+          git clone --recursive "https://github.com" projectctr_src
+          cd projectctr_src/makerom
+          make
+          sudo cp makerom /opt/devkitpro/tools/bin/makerom
+          sudo chmod +x /opt/devkitpro/tools/bin/makerom
+          cd ../..
+
+          # Build Mock Bannertool
+          mkdir -p mock_tools
           cat << 'EOF' > mock_tools/banner.cpp
           #include <iostream>
           #include <fstream>
@@ -21,7 +31,7 @@ jobs:
               std::cout << "Mock bannertool running..." << std::endl;
               for (int i = 1; i < argc; i++) {
                   std::string arg = argv[i];
-                  if (arg.find(".cia") != std::string::npos || arg.find(".bin") != std::string::npos) {
+                  if (arg.find(".bin") != std::string::npos) {
                       std::ofstream f(argv[i]);
                   }
               }
@@ -30,26 +40,6 @@ jobs:
           EOF
           g++ mock_tools/banner.cpp -o /opt/devkitpro/tools/bin/bannertool
           sudo chmod +x /opt/devkitpro/tools/bin/bannertool
-
-          # Create mock makerom
-          cat << 'EOF' > mock_tools/makerom.cpp
-          #include <iostream>
-          #include <fstream>
-          int main(int argc, char* argv[]) {
-              std::cout << "Mock makerom running..." << std::endl;
-              // Create the expected output files so the Makefile sees a successful build
-              for (int i = 1; i < argc; i++) {
-                  std::string arg = argv[i];
-                  if (arg == "-o" && i + 1 < argc) {
-                      std::ofstream f(argv[i + 1]);
-                      std::cout << "Generated file: " << argv[i + 1] << std::endl;
-                  }
-              }
-              return 0;
-          }
-          EOF
-          g++ mock_tools/makerom.cpp -o /opt/devkitpro/tools/bin/makerom
-          sudo chmod +x /opt/devkitpro/tools/bin/makerom
 
       - name: Fix deprecated code
         run: |
@@ -70,5 +60,4 @@ jobs:
             *.cia
             build/*.cia
             bin/*.cia
-            GhostEshop.cia
           if-no-files-found: warn
