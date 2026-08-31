@@ -14,11 +14,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y curl
           
-          # Fetch official pre-compiled makerom utility
-          curl -L -o makerom.tar.gz "https://github.com"
-          mkdir -p makerom_dir
-          tar -xzf makerom.tar.gz -C makerom_dir || unzip makerom.tar.gz -d makerom_dir || true
-          sudo cp makerom_dir/makerom /opt/devkitpro/tools/bin/makerom
+          # Place the actual makerom executable straight into the tool path
+          curl -L -o /opt/devkitpro/tools/bin/makerom "https://github.com"
           sudo chmod +x /opt/devkitpro/tools/bin/makerom
 
           # Construct mock bannertool to clear asset dependencies
